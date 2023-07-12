@@ -11,6 +11,7 @@ import Link from "next/link";
 function NavbarLayout() {
   const router = useRouter();
   const handleLogout = () => {
+    localStorage.removeItem("token");
     router.push("/auth/login");
   };
   return (

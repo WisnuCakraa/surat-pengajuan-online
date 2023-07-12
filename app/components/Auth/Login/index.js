@@ -13,7 +13,7 @@ import { useRouter } from "next/router";
 
 export default function Login() {
   const validationSchema = Yup.object().shape({
-    email: Yup.string().required("Email Harus Diisi"),
+    username: Yup.string().required("Username Harus Diisi"),
     password: Yup.string().required("Passowrd Harus Diisi"),
   });
   const resolvers = {
@@ -59,15 +59,16 @@ export default function Login() {
 
   const onSubmit = (data) => {
     const param = {
-      email: data?.email,
+      username: data?.username,
       password: data?.password,
     };
-    if (data.email.toUpperCase() === "ADMIN") {
+    if (data.username.toUpperCase() === "ADMIN") {
       router.push("/admin");
-    } else {
+    } else if (data.username.toUpperCase() === "USER"){
       router.push("/");
+    }else {
+      router.push("/auth/login");
     }
-    // dispatch(login(param))
   };
   return (
     <Aux>
@@ -88,19 +89,19 @@ export default function Login() {
               <Form onSubmit={handleSubmit(onSubmit)} autoComplete="off">
                 <Form.Group className="text-start mb-3">
                   <Form.Label className="font-weight-bold mb-0">
-                    Email
+                    Username
                   </Form.Label>
                   <Form.Control
-                    {...register("email")}
-                    name="email"
+                    {...register("username")}
+                    name="username"
                     type="text"
-                    placeholder="Masukkan Email"
+                    placeholder="Masukkan Username"
                     style={{
-                      borderColor: errors.email ? "#fa1e0e" : "#8692A6",
+                      borderColor: errors.username ? "#fa1e0e" : "#8692A6",
                     }}
                   />
-                  {errors.email && (
-                    <p className="txt-error">{errors.email.message}</p>
+                  {errors.username && (
+                    <p className="txt-error">{errors.username.message}</p>
                   )}
                 </Form.Group>
                 <Form.Group className="text-start mb-3">
